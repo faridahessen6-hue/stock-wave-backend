@@ -4,7 +4,7 @@ import database from "better_sqlite3";
 const db = new database("./database/database.db");
 
 function getAlluserPortifolio() {
-    const query = db.prepare("SELECT * FROM user_portifolio");
+    const query = db. prepare("SELECT * FROM user_portifolio");
     const result = query.all();
     return result;
 }
