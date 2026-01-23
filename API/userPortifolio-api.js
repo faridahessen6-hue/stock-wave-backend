@@ -1,4 +1,4 @@
-import * as userportifolioService from '../Services/userportifolioService';
+import * as userportifolioService from '../Services/userportifolioService.js';
 
 export default function (app) {
 

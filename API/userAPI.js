@@ -1,4 +1,4 @@
-import * as usersService from '../Services/usersService';
+import * as usersService from "../Services/usersService.js";
 
 
 export default function (app) {

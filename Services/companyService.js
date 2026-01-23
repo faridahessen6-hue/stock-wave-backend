@@ -1,7 +1,7 @@
-import Database from "better_sqlite3";
+import Database from "better-sqlite3";
 
 
-const db = new Database("./database/database.db");
+const db = new Database("../database/database.db");
 
 function getAllcompanies() {
     const query = db.prepare("SELECT * FROM company");

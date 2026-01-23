@@ -1,7 +1,7 @@
-import database from "better_sqlite3";
+import database from "better-sqlite3";
 
 
-const db = new database("./database/database.db");
+const db = new database("../database/database.db");
 
 function getAllUsers() {
     const query= db.prepare("SELECT * FROM users");

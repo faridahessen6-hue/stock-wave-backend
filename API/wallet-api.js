@@ -1,4 +1,4 @@
-import * as walletService from '../Services/walletService';
+import * as walletService from '../Services/walletServies.js';
 
 export default function (app) {
 

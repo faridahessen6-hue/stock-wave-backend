@@ -1,4 +1,4 @@
-import * as stockService from '../Services/stockService';
+import * as stockService from '../Services/stockServices.js';
 
 export default function (app) {
 
