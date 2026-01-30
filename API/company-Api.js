@@ -1,12 +1,12 @@
-import * as companyService from '../Services/companyService';
+import { getAllCompanies, getCompanyById, getCompaniesBySectorId, getCompanyByTicker, createCompany, updateCompany, deleteCompany } from '../Services/companyService.js';
 
 
 
 export default function (app) {
-    
+
     // GET all companieS
     app.get('/company', (req, res) => {
-        const company = companyService.getAllCompany();
+        const company = getAllCompanies();
         res.json(company);
     });
 
@@ -14,7 +14,7 @@ export default function (app) {
     // GET company by id
     app.get('/company/:id', (req, res) => {
         const companyId = req.params.id;
-        const company = companyService.getCompanyById(companyId);
+        const company = getCompanyById(companyId);
         res.json(company);
     });
 
@@ -23,7 +23,7 @@ export default function (app) {
     // getcompany by sectorid
     app.get('/company/sector/:sectorId', (req, res) => {
         const sectorId = req.params.sectorId;
-        const companies = companyService.getCompaniesBySectorId(sectorId);
+        const companies = getCompaniesBySectorId(sectorId);
         res.json(companies);
     });
 
@@ -34,7 +34,7 @@ export default function (app) {
 
     app.get('/company/ticker/:ticker', (req, res) => {
         const ticker = req.params.ticker;
-        const company = companyService.getCompanyByTicker(ticker);
+        const company = getCompanyByTicker(ticker);
         res.json(company);
     });
 
@@ -42,7 +42,7 @@ export default function (app) {
     // create company
     app.post('/company', (req, res) => {
         const { sectorId, name, market_cap, growth_rate, share_price, ticker, description } = req.body
-        const companyId = companyService.createCompny(name, sectorId, market_cap, growth_rate, share_price, ticker, description);
+        const companyId = createCompany(name, sectorId, market_cap, growth_rate, share_price, ticker, description);
         if (companyId) {
             res.status(201).json
                 (
@@ -89,7 +89,7 @@ export default function (app) {
             companyId: companyId
         });
     });
-    
+
 
 
 };

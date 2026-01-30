@@ -1,15 +1,16 @@
-import * as usersService from "../Services/usersService.js";
+import { getAllUsers, getUserById, createUser, updateUser, deleteUser } from "../Services/usersService.js";
+import { createOrder } from "../Services/orderService.js";
 
 
 export default function (app) {
     app.get('/users', (req, res) => {
-        const users = usersService.getAllUsers();
+        const users = getAllUsers();
         res.json(users);
     });
 
     app.post('/users', (req, res) => {
         const { name, email, password } = req.body;
-        const user = usersService.createUser(name, email, password);
+        const user = createUser(name, email, password);
         res.status(201).json(
             {
                 message: 'User created successfully',
@@ -22,7 +23,7 @@ export default function (app) {
 
     app.post('/orders', (req, res) => {
         const { userId, bookId } = req.body
-        const orderId = orderService.createOrder(userId, bookId);
+        const orderId = createOrder(userId, bookId);
         if (orderId) {
             res.status(201).json
                 (

@@ -1,58 +1,52 @@
 import Database from "better-sqlite3";
 
 
-const db = new Database("../database/database.db");
+import path from 'path';
+const dbPath = path.join(process.cwd(), 'database', 'database.db');
+const db = new Database(dbPath);
 
-function getAllcompanies() {
+export function getAllCompanies() {
     const query = db.prepare("SELECT * FROM company");
     const result = query.all();
     return result;
 }
 
-
-
-function getCompanyById(id) {
+export function getCompanyById(id) {
     const query = db.prepare("SELECT * FROM company WHERE id = ?");
     const result = query.get(id);
     return result;
 }
 
-
-function getCompaniesBySectorId(sector_id) {
+export function getCompaniesBySectorId(sector_id) {
     const query = db.prepare("SELECT * FROM company WHERE sector_id = ?");
     const result = query.all(sector_id);
     return result;
 }
 
-function createCompany(name, sector_id, market_cap, growth_rate, share_price, ticker, description) {
+export function getCompanyByTicker(ticker) {
+    const query = db.prepare("SELECT * FROM company WHERE ticker = ?");
+    const result = query.get(ticker);
+    return result;
+}
+
+export function createCompany(name, sector_id, market_cap, growth_rate, share_price, ticker, description) {
     const query = db.prepare("INSERT INTO company (name, sector_id, market_cap, growth_rate, share_price, ticker, description) VALUES (?, ?, ?, ?, ?, ?, ?)");
     const result = query.run(name, sector_id, market_cap, growth_rate, share_price, ticker, description);
-    console.log("User created successfully", result);
-    return result;
-
+    console.log("Company created successfully", result);
+    return result.lastInsertRowid;
 }
 
-
-
-function updateCompany(id, name, sector_id, market_cap, growth_rate, share_price, ticker, description) {
+export function updateCompany(id, name, sector_id, market_cap, growth_rate, share_price, ticker, description) {
     const query = db.prepare("UPDATE company SET name = ?, sector_id = ?, market_cap = ?, growth_rate = ?, share_price = ?, ticker = ?, description = ? WHERE id = ?");
     const result = query.run(name, sector_id, market_cap, growth_rate, share_price, ticker, description, id);
-    console.log("User updated successfully", result);
+    console.log("Company updated successfully", result);
     return result;
 }
 
-function deleteCompany(id) {
+export function deleteCompany(id) {
     const query = db.prepare("DELETE FROM company WHERE id = ?");
     const result = query.run(id);
-    console.log("User deleted successfully", result);
+    console.log("Company deleted successfully", result);
     return result;
 }
 
-export default {
-    getAllcompanies,
-    getCompanyById,
-    getCompaniesBySectorId,
-    createCompany,
-    updateCompany,
-    deleteCompany
-}

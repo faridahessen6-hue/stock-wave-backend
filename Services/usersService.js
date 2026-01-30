@@ -1,51 +1,40 @@
 import database from "better-sqlite3";
 
 
-const db = new database("../database/database.db");
+import path from 'path';
+const dbPath = path.join(process.cwd(), 'database', 'database.db');
+const db = new database(dbPath);
 
-function getAllUsers() {
-    const query= db.prepare("SELECT * FROM users");
+export function getAllUsers() {
+    const query = db.prepare("SELECT * FROM users");
     const result = query.all();
     return result;
 }
 
-
-
-function getUserById(id) {
+export function getUserById(id) {
     const query = db.prepare("SELECT * FROM users WHERE id = ?");
     const result = query.get(id);
     return result;
 }
 
-
-function createUser( name ,age,email,password,birthday,role,balance,phone,ssn) {
+export function createUser(name, age, email, password, birthday, role, balance, phone, ssn) {
     const query = db.prepare("INSERT INTO users (name, age, email, password, birthday, role, balance, phone, ssn) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
     const result = query.run(name, age, email, password, birthday, role, balance, phone, ssn);
-    console.log("User created successfully",result);
-    return result;
-
+    console.log("User created successfully", result);
+    return result.lastInsertRowid;
 }
 
-
-
-function updateUser(id,name,age,email,password,birthday,role,balance,phone,ssn) {
+export function updateUser(id, name, age, email, password, birthday, role, balance, phone, ssn) {
     const query = db.prepare("UPDATE users SET name = ?, age = ?, email = ?, password = ?, birthday = ?, role = ?, balance = ?, phone = ?, ssn = ? WHERE id = ?");
     const result = query.run(name, age, email, password, birthday, role, balance, phone, ssn, id);
-    console.log("User updated successfully",result);
+    console.log("User updated successfully", result);
     return result;
 }
 
-function deleteById(id) {
+export function deleteUser(id) {
     const query = db.prepare("DELETE FROM users WHERE id = ?");
     const result = query.run(id);
-    console.log("User deleted successfully",result);
+    console.log("User deleted successfully", result);
     return result;
 }
 
-export default {
-    getAllUsers,
-    getUserById,
-    createUser,
-    updateUser,
-    deleteById
-}

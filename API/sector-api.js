@@ -1,19 +1,19 @@
-import * as sectorService from '../Services/sectorService';
+import { getAllSectors, getSectorById, createSector, updateSector, deleteSector } from '../Services/sectorService.js';
 
 
 
 export default function (app) {
 
     app.get('/sector', (req, res) => {
-        const sector = sectorService.getAllSectors();
+        const sector = getAllSectors();
         res.json(sector);
     });
 
 
 
     app.post('/sector', (req, res) => {
-        const { name,number_of_companies,growth_rate,market_cap ,description} = req.body
-        const sectorId = sectorService.createSector(name, number_of_companies, market_cap, growth_rate, description);
+        const { name, number_of_companies, growth_rate, market_cap, description } = req.body
+        const sectorId = createSector(name, number_of_companies, market_cap, growth_rate, description);
         if (sectorId) {
             res.status(201).json
                 (
@@ -58,8 +58,7 @@ export default function (app) {
             sectorId: sectorId
         });
     });
-    // i wanna 
-    
+
 
 
 };

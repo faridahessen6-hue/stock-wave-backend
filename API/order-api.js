@@ -1,11 +1,11 @@
-import * as orderService from '../Services/orderService.js';
+import { getAllOrders, getOrderById, createOrder, updateOrder, deleteOrder } from '../Services/orderService.js';
 
 
 
 export default function (app) {
 
     app.get('/orders', (req, res) => {
-        const orders = orderService.getAllOrders();
+        const orders = getAllOrders();
         res.json(orders);
     });
 
@@ -13,7 +13,7 @@ export default function (app) {
 
     app.post('/orders', (req, res) => {
         const { userId, bookId } = req.body
-        const orderId = orderService.createOrder(userId, bookId);
+        const orderId = createOrder(userId, bookId);
         if (orderId) {
             res.status(201).json
                 (
