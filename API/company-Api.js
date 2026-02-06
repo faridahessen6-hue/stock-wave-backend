@@ -5,7 +5,7 @@ import { getAllCompanies, getCompanyById, getCompaniesBySectorId, getCompanyByTi
 export default function (app) {
 
     // GET all companieS
-    app.get('/company', (req, res) => {
+    app.get('/companies', (req, res) => {
         const company = getAllCompanies();
         res.json(company);
     });

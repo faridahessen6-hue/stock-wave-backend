@@ -4,7 +4,7 @@ import { getAllSectors, getSectorById, createSector, updateSector, deleteSector 
 
 export default function (app) {
 
-    app.get('/sector', (req, res) => {
+    app.get('/sectors', (req, res) => {
         const sector = getAllSectors();
         res.json(sector);
     });

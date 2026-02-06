@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import userAPI from './userAPI.js';
 import stockAPI from "./stock-api.js";
 import orderAPI from './order-api.js';
@@ -10,6 +11,7 @@ import sectorAPI from './sector-api.js';
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
 userAPI(app);
