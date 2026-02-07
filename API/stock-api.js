@@ -1,4 +1,5 @@
-import { getAllStocks, getStockById, createStock, updateStock, deleteStock } from '../Services/stockServices.js';
+
+import { getAllStocks, getStockById, createStock, updateStock, deleteStock, getStocksByCompanyId } from '../Services/stockServices.js';
 
 export default function (app) {
 
@@ -28,22 +29,49 @@ export default function (app) {
 
     app.put("/stocks/:id", (req, res) => {
         const stockId = req.params.id;
-        const updatedData = req.body;
+        const { bookId, quantity } = req.body;
 
+        const result = updateStock(stockId, bookId, quantity);
 
-        res.status(200).json({
-            message: "stocks updated successfully",
-            stockId: stockId,
-            newData: updatedData
-        });
+        if (result.changes > 0) {
+            res.status(200).json({
+                message: "Stock updated successfully",
+                stockId: stockId
+            });
+        } else {
+            res.status(404).json({
+                message: "Stock not found"
+            });
+        }
     });
 
     app.delete("/stocks/:id", (req, res) => {
         const stockId = req.params.id;
-        res.status(200).json({
-            message: "stocks deleted successfully",
-            stockId: stockId
-        });
+        const result = deleteStock(stockId);
+
+        if (result.changes > 0) {
+            res.status(200).json({
+                message: "Stock deleted successfully",
+                stockId: stockId
+            });
+        } else {
+            res.status(404).json({
+                message: "Stock not found"
+            });
+        }
+    });
+
+    app.get("/stocks/company/:companyId", (req, res) => {
+        const companyId = req.params.companyId;
+        const stocks = getStocksByCompanyId(companyId);
+
+        if (stocks.length > 0) {
+            res.status(200).json(stocks);
+        } else {
+            res.status(404).json({
+                message: "No stock history found for this company"
+            });
+        }
     });
 
 

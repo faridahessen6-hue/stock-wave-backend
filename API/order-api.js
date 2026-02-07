@@ -11,9 +11,9 @@ export default function (app) {
 
 
 
-    app.post('/orders', (req, res) => {
-        const { userId, bookId } = req.body
-        const orderId = createOrder(userId, bookId);
+    app.post('/order', (req, res) => {
+        const { userId, companyId, quantity, price, totalPrice, date, numberOfShares } = req.body
+        const orderId = createOrder(userId, companyId, quantity, price, totalPrice, date, numberOfShares);
         if (orderId) {
             res.status(201).json
                 (
