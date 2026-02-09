@@ -1,9 +1,9 @@
-import database from "better-sqlite3";
+import Database from "better-sqlite3";
 
 
 import path from 'path';
 const dbPath = path.join(process.cwd(), 'database', 'database.db');
-const db = new database(dbPath);
+const db = new Database(dbPath);
 
 export function getAllWallets() {
     const query = db.prepare("SELECT * FROM wallet_transactions");
@@ -17,14 +17,14 @@ export function getWalletById(id) {
     return result;
 }
 
-export function createWallet(user_id, amount, type, timestamp) {
+export function createWallet(user_id, amount, type = 'deposit', timestamp = new Date().toISOString()) {
     const query = db.prepare("INSERT INTO wallet_transactions (user_id, amount, type, timestamp) VALUES (?, ?, ?, ?)");
     const result = query.run(user_id, amount, type, timestamp);
     console.log("Wallet transaction created successfully", result);
     return result.lastInsertRowid;
 }
 
-export function updateWallet(id, user_id, amount, type, timestamp) {
+export function updateWallet(id, user_id, amount, type = 'deposit', timestamp = new Date().toISOString()) {
     const query = db.prepare("UPDATE wallet_transactions SET user_id = ?, amount = ?, type = ?, timestamp = ? WHERE id = ?");
     const result = query.run(user_id, amount, type, timestamp, id);
     console.log("Wallet transaction updated successfully", result);

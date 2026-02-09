@@ -1,9 +1,9 @@
-import database from "better-sqlite3";
+import Database from "better-sqlite3";
 
 
 import path from 'path';
 const dbPath = path.join(process.cwd(), 'database', 'database.db');
-const db = new database(dbPath);
+const db = new Database(dbPath);
 
 export function getAllUsers() {
     const query = db.prepare("SELECT * FROM users");
@@ -38,3 +38,8 @@ export function deleteUser(id) {
     return result;
 }
 
+export function login(email, password) {
+    const query = db.prepare("SELECT * FROM users WHERE email = ? AND password = ?");
+    const result = query.get(email, password);
+    return result;
+}

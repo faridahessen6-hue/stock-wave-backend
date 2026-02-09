@@ -1,9 +1,9 @@
-import database from "better-sqlite3";
+import Database from "better-sqlite3";
 
 
 import path from 'path';
 const dbPath = path.join(process.cwd(), 'database', 'database.db');
-const db = new database(dbPath);
+const db = new Database(dbPath);
 
 export function getAllUserPortfolios() {
     const query = db.prepare("SELECT * FROM user_portifolio");

@@ -1,9 +1,9 @@
-import database from "better-sqlite3";
+import Database from "better-sqlite3";
 
 
 import path from 'path';
 const dbPath = path.join(process.cwd(), 'database', 'database.db');
-const db = new database(dbPath);
+const db = new Database(dbPath);
 
 export function getAllStocks() {
     const query = db.prepare("SELECT * FROM stock_price_history");
@@ -17,14 +17,14 @@ export function getStockById(id) {
     return result;
 }
 
-export function createStock(company_id, price, timestamp) {
+export function createStock(company_id, price, timestamp = new Date().toISOString()) {
     const query = db.prepare("INSERT INTO stock_price_history (company_id, price, timestamp) VALUES (?, ?, ?)");
     const result = query.run(company_id, price, timestamp);
     console.log("Stock history created successfully", result);
     return result.lastInsertRowid;
 }
 
-export function updateStock(id, company_id, price, timestamp) {
+export function updateStock(id, company_id, price, timestamp = new Date().toISOString()) {
     const query = db.prepare("UPDATE stock_price_history SET company_id = ?, price = ?, timestamp = ? WHERE id = ?");
     const result = query.run(company_id, price, timestamp, id);
     console.log("Stock history updated successfully", result);
@@ -37,4 +37,8 @@ export function deleteStock(id) {
     console.log("Stock history deleted successfully", result);
     return result;
 }
-
+export function getStocksByCompanyId(company_id) {
+    const query = db.prepare("SELECT * FROM stock_price_history WHERE company_id = ?");
+    const result = query.all(company_id);
+    return result;
+}
