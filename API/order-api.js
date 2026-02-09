@@ -34,11 +34,6 @@ export default function (app) {
     });
 
 
-
-
-
-
-
     app.put("/orders/:id", (req, res) => {
         const ordersId = req.params.id;
         const updatedData = req.body;
@@ -51,6 +46,7 @@ export default function (app) {
         });
     });
 
+
     app.delete("/orders/:id", (req, res) => {
         const ordersId = req.params.id;
         res.status(200).json({
@@ -62,3 +58,7 @@ export default function (app) {
 
 
 };
+
+
+updateOrder()
+deleteOrder()

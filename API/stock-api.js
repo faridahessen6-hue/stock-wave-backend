@@ -13,8 +13,8 @@ export default function (app) {
 
 
     app.post('/stocks', (req, res) => {
-        const { bookId, quantity } = req.body;
-        const stockId = createStock(bookId, quantity);
+        const { companyId, price } = req.body;
+        const stockId = createStock(companyId, price);
         if (stockId) {
             res.status(201).json({
                 message: 'Stock created successfully',
@@ -29,9 +29,9 @@ export default function (app) {
 
     app.put("/stocks/:id", (req, res) => {
         const stockId = req.params.id;
-        const { bookId, quantity } = req.body;
+        const { companyId, price } = req.body;
 
-        const result = updateStock(stockId, bookId, quantity);
+        const result = updateStock(stockId, companyId, price);
 
         if (result.changes > 0) {
             res.status(200).json({

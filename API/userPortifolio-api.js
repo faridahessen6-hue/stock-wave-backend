@@ -13,8 +13,8 @@ export default function (app) {
 
 
     app.post('/userportifolios', (req, res) => {
-        const { userId, bookId } = req.body;
-        const userportifolioId = createUserPortfolio(userId, bookId);
+        const { userId, companyId,total_Capital, date,growth_rate,company_name } = req.body;
+        const userportifolioId = createUserPortfolio(userId, companyId,total_Capital, date,growth_rate,company_name);
         if (userportifolioId) {
             res.status(201).json({
                 message: 'Userportifolio created successfully',
