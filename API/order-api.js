@@ -1,4 +1,4 @@
-import { getAllOrders, getOrderById, createOrder, updateOrder, deleteOrder } from '../Services/orderService.js';
+import { getAllOrders, getOrderById, createOrder, updateOrder, deleteOrder, getOrdersByUserId } from '../Services/orderService.js';
 
 
 
@@ -25,6 +25,17 @@ export default function (app) {
             }
         } catch (error) {
             console.error("Error fetching order by id:", error);
+            res.status(500).json({ message: "Internal server error" });
+        }
+    });
+
+    app.get('/orders/user/:userId', (req, res) => {
+        try {
+            const userId = req.params.userId;
+            const orders = getOrdersByUserId(userId);
+            res.json(orders);
+        } catch (error) {
+            console.error("Error fetching orders for user:", error);
             res.status(500).json({ message: "Internal server error" });
         }
     });

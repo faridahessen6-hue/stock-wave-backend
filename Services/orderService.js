@@ -38,3 +38,9 @@ export function deleteOrder(id) {
     return result;
 }
 
+export function getOrdersByUserId(user_id) {
+    const query = db.prepare("SELECT * FROM orders WHERE user_id = ?");
+    const result = query.all(user_id);
+    return result;
+}
+
